@@ -1,0 +1,618 @@
+\documentclass[a4paper, 11pt]{book}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+
+%\usepackage{tgadventor} % The font for the entire document can be changed here
+%\usepackage{courier}
+%\usepackage{charter}
+\usepackage{tgcursor}
+
+\usepackage{mathrsfs} 
+\usepackage{quiver} 
+\newtheorem{corollary}{Corollary}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows}
+\usepackage{verbatim}
+\usepackage[numbered]{mcode}
+\usepackage{float}
+\usepackage{tikz}
+    \usetikzlibrary{shapes,arrows}
+    \usetikzlibrary{arrows,calc,positioning}
+
+    \tikzset{
+        block/.style = {draw, rectangle,
+            minimum height=1cm,
+            minimum width=1.5cm},
+        input/.style = {coordinate,node distance=1cm},
+        output/.style = {coordinate,node distance=4cm},
+        arrow/.style={draw, -latex,node distance=2cm},
+        pinstyle/.style = {pin edge={latex-, black,node distance=2cm}},
+        sum/.style = {draw, circle, node distance=1cm},
+    }
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{amsmath,amsfonts,amsthm, amssymb}
+\usepackage{array}
+\usepackage[all,textures]{xy}
+\usepackage{graphicx}
+\usepackage{alltt}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{tabu}
+\usepackage{longtable}
+
+
+\theoremstyle{plain}
+\newtheorem{exercise}{Exercise}[chapter]
+\newtheorem*{theorem1}{Theorem 1}
+\newtheorem*{notation}{Notation}
+\newtheorem*{corollary1.1}{Corollary 1.1}
+\newtheorem*{theorem2}{Theorem 2}
+\newtheorem*{corollary2.1}{Corollary 2.1}
+\newtheorem*{remarks}{Remarks}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{Corollary}{Corollary}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+
+% Define solution environment
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Original packages, custom environments, and custom commands below
+  \usepackage{amsmath,amsfonts,amsthm, amssymb}
+  \usepackage{fullpage}
+  \usepackage{array}
+  \usepackage[all,textures]{xy}
+  \usepackage{graphicx}
+  \usepackage{alltt}
+  \usepackage{listings}
+  \usepackage{float}
+  \usepackage{tabu}
+  \usepackage{longtable}
+  \usepackage{lipsum}
+  \usepackage[T1]{fontenc}
+  
+  \theoremstyle{plain}
+  \newtheorem{innercustomgeneric}{\customgenericname}
+\providecommand{\customgenericname}{}
+\newcommand{\newcustomtheorem}[2]{%
+  \newenvironment{#1}[1]
+  {%
+   \renewcommand\customgenericname{#2}%
+   \renewcommand\theinnercustomgeneric{##1}%
+   \innercustomgeneric
+  }
+  {\endinnercustomgeneric}
+}
+
+\newcustomtheorem{definition}{Definition}
+\newcustomtheorem{lemma}{Lemma}
+
+\newcommand{\mb}{\mathbf}
+\newcommand{\arr}{\rightarrow}
+\newcommand{\op}{\text{op}}
+\newcommand{\inv}{{-1}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\dom}{\text{dom}}
+\newcommand{\p}{\prime}
+\newcommand{\obj}{\text{obj}}
+\newcommand{\id}{\text{Id}}
+\newcommand{\mc}{\mathcal}
+\newcommand{\warr}{\xrightarrow}
+\newcommand{\tb}{\textbf}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\cod}{\text{cod}}
+\newcommand{\Co}{\mathbf{C}^op}
+\newcommand{\x}{\times}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\D}{\mb{D}}
+\newcommand{\F}{\mc{F}}
+\newcommand{\G}{\mc{G}}
+\newcommand{\iso}{\cong}
+\newcommand{\tarr}{\twoheadrightarrow}
+  \setlength{\parindent}{0pt}
+ 
+ 
+ \newtheorem{thm}{Exercise}
+\begin{document}
+  \begin{titlepage}
+	\centering % Center everything on the title page
+	\scshape % Use small caps for all text on the title page
+	\vspace*{1.5\baselineskip} % White space at the top of the page
+% ===================
+%	Title Section 	
+% ===================
+
+	\rule{13cm}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt} % Thick horizontal rule
+	\rule{13cm}{0.4pt} % Thin horizontal rule
+	
+		\vspace{0.75\baselineskip} % Whitespace above the title
+% ========== Title ===============	
+	{	\Huge Category Theory\\ 
+			\vspace{4mm}
+		Book by Steve Awodey \\	}
+% ======================================
+		\vspace{0.75\baselineskip} % Whitespace below the title
+	\rule{13cm}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt} % Thin horizontal rule
+	\rule{13cm}{1.6pt} % Thick horizontal rule
+	
+		\vspace{1.75\baselineskip} % Whitespace after the title block
+% =================
+%	Information	
+% =================
+	{\large : 
+		\vspace*{1.2\baselineskip}
+	} \\
+	\vfill
+
+\end{titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begingroup
+\let\cleardoublepage\clearpage
+\tableofcontents
+\endgroup
+
+\chapter{Categories}
+
+  \begin{exercise}
+    The object of $\mb{Rel}$ are sets, and an arrow $A \arr B$ is a relation from $A$ to $B$, that is, a subset $R \subseteq A \times B$. The equality relation $\{ \langle a, a \rangle \in A \times A: a \in A \}$ is the identity arrow on a set $A$. Composition in $\mb{Rel}$ is to be given by $$ S \circ R=\{ \langle a , c \rangle \in A \times C: \exists b (\langle a,b \rangle \in R \text{ and } \langle b,c \rangle \in S)\}$$ for $R \subseteq A \times B$ and $S \subseteq B \times C$. \\
+    (a) Show that $\mb{Rel}$ is a category. \\
+    (b) Show also that there is a functor $G: \mb{Sets} \arr \mb{Rel}$ taking objects to themselves and each function $f:A \arr B$ to its graph, $$G(f)=\{ \langle a, f(a) \rangle \in A \times B: a \in A\}.$$ 
+    (c) Finally, show that there is a functor $C:\mb{Rel}^\op \rightarrow \mb{Rel}$ taking each relation $R \subseteq A \times B$ to its converse $R^c \subseteq B \times A$, where $$\langle a,b \rangle \in R^c \leftrightarrow \langle b,a \rangle \in R.$$
+  \end{exercise}
+  \begin{proof} $ $ \\
+    (a) First we prove that each object have identity arrow on it. Consider some set $A$. Let $1_A$ be the equality relationship on $A$. Let $B$ be a set such that there is relation $R \subseteq A \times B$. Then if $(x,y) \in R \circ 1_A$, we must have $(x,y) \in R$ and if $(x,y) \in R$ then $(x,y) \in R \circ 1_A$. Therefore, $R \circ 1_A=R$. Similarly, we can prove that $1_A \circ B=B$ for some relation $B \subseteq C \times A$. Since we already know that composition of relationship is associative, it follows composition in $\mb{Rel}$ is assoicative. \\
+
+    (b) Since $1_A(x)=x$ for any set $A$, we have $G(1_A)=\{(x, 1_A(x)): x \in A\}=\{(x,x):x \in A\}=1_{G(A)}$. Thus, identity is mapped to identity. Next we prove composition is preserved. Consider functions $f:A \arr B$ and $g:B \arr C$. We are going to prove that $G(g \circ f)=G(g) \circ G(f)$. Let $(x, g(f(x))) \in G(g \circ f)$. Then clearly $(x, f(x)) \in G(f)$ and since $f(x) \in B$, we have $(f(x), g(f(x))) \in G(g)$. Thus, $(x, g(f(x))) \in G(g) \circ G(f)$. Consider some $(x,g(f(x))) \in G(g \circ f)$. Now consider some $(x,y) \in G(g) \circ G(f)$. It follows that there exists some $z \in B$ such that $(x,z) \in G(f)$ and $(z,y) \in G(g)$. But then by the definition of the functor, it means $z=f(x)$ and $y=g(f(x))$. Thus, $(x,y)=(x,g(f(x))) \in G(g \circ f)$. Therefore, $G(g \circ f)=G(g) \circ G(f)$. \\
+
+    (c) Define functor $\mc{F}: \mb{Rel} \arr \mb{Rel}^\op$ so that $\mc{F}(A)=A$ for any set $A$ and $\mc{F}(R)=R^c$ for any relationship (ie arrow). Since $1_A=1_A^c$, we must have $\mc{F}(1_A)=1_A=1_{\mc{F}(A)}$. Now we prove composition is preserved. Clearly $\mc{F}(S \circ R)=(S \circ R)^c = S^c \circ R^c = \F(S) \circ \F(R)$.
+  \end{proof}
+
+  \begin{exercise}
+    Consider the following isomorphisms of categories and determine which hold. \\
+    (a) $\mb{Rel} \iso \mb{Rel}^\op$. \\
+    (b) $\mb{Sets} \iso \mb{Sets}^\op$. \\
+    (c) For a fixed sets $X$ with powerset $P(X)$, as poset categories $P(X) \iso P(X)^\op$.
+  \end{exercise}
+  \begin{proof} $ $ \\
+    (a) Define $\F_1:\mb{Rel} \arr \mb{Rel}^\op$ so that $\F_1(A)=A$ for any set $A$ and $\F_1(R)=R^c$ for any arrow $R \in \mb{Rel}$. Define $F_2: \mb{Rel}^\op \arr \mb{Rel}$ same way. We already proved it is a functor in last exercise. Then, since $(R^c)^c=R$, we have $\F_1(\F_2(R))=R$ and $F_2(\F_1(R))=R$. Hence, $\mb{Rel} \iso \mb{Rel}^\op$. \\
+    
+    (b) In $\mb{Sets}$, there is an unique initial object i.e. emptyset. However, in $\mb{Sets}^\op$, any singleton act as initial object ie it is only unique upto isomorphism. Therefore, $\mb{Sets}$ is not isomorphic to $\mb{Sets}^\op$. \\
+
+    (c) Define functor $\F_1: P(X) \arr P(X)^\op$ so that $\mc{F}(A)=X/A$ and $\F(A \subseteq B)=F(A) \supseteq F(B)$. Define $F_2: P(X)^\op \arr P(X)$ same way. Since $X/(X/A)=A$, we have $\F_1(\F_2 (A))=A$ and $\F_2(\F_1(A))=A$. For arrows, we have 
+    \begin{align*}
+      \F_1 (F_2 (A \subseteq B)) &=\F_1(\F_2(A) \supseteq F(B)) \\ 
+      &=F_1(F_2(A)) \subseteq F_1(F_2(B)) \\
+      &=A\subseteq B.
+    \end{align*}
+    Simillarly, $\F_2(F_1(A \subseteq B))=A \subseteq B$. 
+
+
+    
+  \end{proof}
+
+  \begin{exercise} $ $ \\
+    (a) Show that in $\mb{Sets}$, the isomorphisms are exactly the bijections. \\
+    (b) Show that in $\mb{Monoids}$, the isomorphism are exactly the bijective homomorphisms. \\
+    (c) Show that in $\mb{Posets}$, the isomorphisms are not the same as the bijective homomorphisms.
+  \end{exercise}
+  \begin{proof} $ $ \\
+    (a) First we prove the forward implication. Consider some isomorphic sets $A$ and $B$. By the definition, we know that there exists $f:A \arr B$ and $g:B \arr A$ satisfying $g \circ f =1_A$ and $f \circ g=1_B$. Our goal is to prove $f$ is bijection. Let $a_1,a_2 \in A$ and suppose $f(a_1)=f(a_2)$. Taking $g$ both sides we have $a_1=g(f(a_1))=g(f(a_2))=a_2$. Hence $f$ is injective. Let $b \in B$. Then it follows $g(b) \in A$ but since $f(g(b))=b$, we have $f$ to be surjective. The converse implication is trivial. \\
+
+    (b) Since $\mb{Monoids}$ are concrete, we know objects are sets with structure and arrows are structure preserving function between the sets. It follows immediately, from previous exercises, that if $M_1$ and $M_2$ are isomorphic, we must have a bijective homomorphism $M_1 \arr M_2$. Thus, we only need to prove converse implication. Suppose $M_1$ and $M_2$ are monoids such that there exists bijective homomorphism $f:M_1 \arr M_2$. Note that our goal is to prove $f^{-1}$ is a homomorphism since we already know from the previous exercise that $f \circ f^{-1}=1_{M_2}$ and $f^{-1} \circ f=1_{M_1}$. Consider some $a_1, a_2 \in M_2$. Since $f$ is bijective, we know there are $b_1,b_2 \in M_1$ such that $f(b_1)=a_1$ and $f(b_2)=a_2$. We also must have $f(b_1b_2)=f(b_1)f(b_2)=a_1a_2$ because $f$ is homomorphism. But that means $f^\inv(a_1)f^\inv (a_2)=f^\inv (f(b_1))f^\inv (f(b_2))=b_1b_2=f^\inv(a_1a_2)$. \\
+
+    (c) Consider posets, $P_1=(\Z, |)$ and $P_2=(\Z, \leq)$. It is easy to see that $id_{\Z}$ is order preserving bijective map since $a|b$ implies $a \leq b$. However the converse is not true, notice $2 \leq 3$ but $2$ does not divide $3$.
+  \end{proof}
+
+  \begin{exercise} $ $ \\
+    Let $X$ be a topological space and preorder the points by specialization: $x \leq y$ iff $y$ is contained in every open set that contains $x$. Show that this is a preorder, and that it is a poset if $X$ is $T_0$. Show that the ordering is trivial if $X$ is $T_1$.
+  \end{exercise}
+  \begin{proof}
+    First we prove that specialization relationship is preorder. It is easy to see why it is reflexive. For transitivity, consider $x \leq y$ and $y \leq z$ and Let $A$ be arbitrary open set containing $z$. Since $y \leq z$, we have $y \in A$ but then since $A$ is open set containing $y$, it must be the case that $x \in A$. Hence, $x \leq z$. As desired. \\
+
+    Since we already showed any topological space is preorder under specialization, we merely need to demonstrate antisymmetry in $T_0$ and $T_1$ to show they are poset. For the former, suppose $x \leq y$ in $T_0$. It follows that there must exists an open set which contains $y$ but not $x$, since $y$ is contained in every open set containing $x$. That means $T_0$ has antisymmetry. In the case of $T_1$, the ordering is trivial since no two distinct elements are related.
+  \end{proof}
+
+  \begin{exercise}
+    For any category $\mb{C}$, define a functor $\mc{U}:\mb{C}/C \arr C$ frome the slice category over an object $C$ that "forgets about $C$". Find a functor $F: \mb{C}/C \arr \mb{C}^\arr$ to the arrow category such that $\mb{dom} \circ F=U$
+  \end{exercise}
+  \begin{proof}
+    Recall that in slice category $\mb{C}/C$, an object is simply an arrow $\dom(f) \warr{f} C$ and morphism $f \warr{f^\p} g$ is a morphism $\dom(f) \warr{n} \dom(g)$, in category $\mb{C}$, making  
+    \[\begin{tikzcd}
+      {\ \text{dom}(f)} &&&& { \text{dom}(g)} \\
+      \\
+      && { C}
+      \arrow["f", from=1-1, to=3-3]
+      \arrow["g"', from=1-5, to=3-3]
+      \arrow["n"', from=1-1, to=1-5]
+    \end{tikzcd}\]
+    commutes. 
+     We define functor $\mc{U}:\mb{C}/C \arr C$ so that $\mc{U}(f)= \dom(f)$ for any object $f \in \obj(\mb{C}/C)$ and $\mc{U}(f \warr{f^\p} g)=\dom(f) \warr{n} \dom(g)$ where $n$ is the morphism $\dom(f) \arr \dom(g)$ satisfying the above commutative diagram. We first check that identity is mapped to identity. Notice that $f \warr{1_f^\p} f$ is an arrow such that \[\begin{tikzcd}
+      {\ \text{dom}(f)} &&&& { \text{dom}(f)} \\
+      \\
+      && { C}
+      \arrow["f", from=1-1, to=3-3]
+      \arrow["f"', from=1-5, to=3-3]
+      \arrow["{1_f^\prime}"', from=1-1, to=1-5]
+    \end{tikzcd}\]
+    commutes i.e. $1_f^\p=\id_{\dom (f)}$. Thus, $\mc{U}(f \warr{1_f^\p} f)= 1_{\dom(f)}$ as desired. Next we prove that $\mc{U}$ preserves the composition. Consider objects $\dom(f) \warr{f} C, \dom(g) \warr{g} C$, and $\dom(h) \warr{h} C$ in $\obj(\mb{C}/C)$ such that there is morphism $f^\p:f \arr g$ and $g^\p: g \arr h$. Let $n:\dom(f) \arr \dom(g)$ and $m:\dom(g) \arr \dom(h)$ making 
+    \[\begin{tikzcd}
+      {\text{dom}(f)} &&& {\text{dom}(g)} &&& {\text{dom}(h)} \\
+      \\
+      \\
+      &&& C
+      \arrow["f"', from=1-1, to=4-4]
+      \arrow["n", from=1-1, to=1-4]
+      \arrow["g", from=1-4, to=4-4]
+      \arrow["m", from=1-4, to=1-7]
+      \arrow["h", from=1-7, to=4-4]
+    \end{tikzcd}\]
+    commute. As apparent from diagram, $\mc{U} (g^\p \circ f^\p)=m \circ n=\mc{U}(g^\p) \circ \mc{U}(f^\p)$.  \\
+
+    We will now talk about constructing functor $\mc{F}:\mb{C}/C \arr \mb{C}^\arr$ and $\mb{dom}:\mb{C}^\arr \arr \mb{C}$. Before we get into it, let us first discuss about $\mb{C}^\arr$. In $\mb{C}^\arr$, objects are morphisms of $\C$ and morphism between $f,g \in \hom(\C)$ is $(n,k) \in \hom(\C)^2$ such that 
+    \[\begin{tikzcd}
+      \bullet &&& \bullet \\
+      \\
+      \\
+      \bullet &&& \bullet
+      \arrow["n"{description}, from=1-1, to=1-4]
+      \arrow["f"{description}, from=1-1, to=4-1]
+      \arrow["g"{description}, from=1-4, to=4-4]
+      \arrow["k"{description}, from=4-1, to=4-4]
+    \end{tikzcd}\]
+    commutes. Define $\mc{F}:\mb{C}/C \arr \mb{C}^\arr$ such that for any $f \in \obj(\mc{C}/C)$, we have $\mc{F}(f)=f$ and $\mc{F}(f \warr{f^\p} g)=f \warr{(n, 1_C)} g$. It is easy to see it is a functor. Define $\mb{dom}:\mb{C}^\arr \arr C$ as $\mb{dom}(f)=\dom(f)$ for any $f \in \obj(\mb{C}^\arr)$ and $\mb{dom}(f \warr{(n,k)} g)=\dom(f) \warr{n} \dom(g)$. Again, it's easy to verify that it is a functor. \\
+
+    Finally, we prove that $\mb{dom} \circ \mc{F}=\mc{U}$. For any $f \in \obj(\C/C)$, we have $\mb{dom} \circ \mc{F}(f)=\mb{dom} (\mc{F}(f))=\mb{dom}(f)=\dom(f)=\mc{U}(f)$ and for any $f \warr{f^\p} g$ in $\C/C$, clearly $\mb{dom} \circ \mc{F} ( f \warr{f^\p} g)=\mb{dom}( \mc{F} ( f \warr{f^\p} g))=\mb{dom}( f \warr{(n, 1_C)} g)=\dom(f) \warr{n} \dom(g)=\mc{U}(f \warr{f^\p} g )$.
+  \end{proof}
+
+  \begin{exercise}
+    Construct the coslice category $C/\mb{C}$ of a category $\mb{C}$ from the dual category operation.
+  \end{exercise}
+  \begin{proof}
+    \begin{notation} In what follows, we refer morphisms of $\mb{C}$ by $f$ and corresponding arrow of $\mb{C}^\op$ by $f_{C^\op}$.
+    \end{notation}
+    Let $f:C \arr A$ and $g: C \arr B$. Consider the slice of $C$ in $\mb{C}^\op$. The objects are $A \warr{f_{C^\op}} C$ and morphism $f_{C^\op} \warr{f_{C^\op}^\p} g_{C^\op}$ are $A \warr{k_{C^\op}} B$ of $\mb{C}^\op$ so that 
+    \[\begin{tikzcd}
+      {\ \text{A}} &&&& { \text{B}} \\
+      \\
+      && { C}
+      \arrow["f_{C^\op}", from=1-1, to=3-3]
+      \arrow["g_{C^\op}"', from=1-5, to=3-3]
+      \arrow["k_{C^\op}"', from=1-1, to=1-5]
+    \end{tikzcd}\]
+    commutes. Rewriting it in terms of $\mb{C}$, we see that $\mb{C}^\op/C$ has $C \warr{f} A$ as objects and $\cod(g) \warr{k} \cod(f)$ as morphism making 
+    \[\begin{tikzcd}
+      { A} &&&& { B} \\
+      \\
+      && C
+      \arrow["g", from=3-3, to=1-5]
+      \arrow["f"', from=3-3, to=1-1]
+      \arrow["k", from=1-5, to=1-1]
+    \end{tikzcd}\]
+    commute. This is exactly the notion of coslice of $\mb{C}$ with $C$. Define functor $\mc{W}: C/\mb{C} \arr C$ so that $\mc{W}(f)=\cod(f)$ and $\mc{W}(g \warr{f^\p} f)=\cod(g) \warr{k} \cod(f)$ where $k$ is the morphism making 
+
+    \[\begin{tikzcd}
+      {\cod(f)} &&&& { \cod(g)} \\
+      \\
+      && C
+      \arrow["g", from=3-3, to=1-5]
+      \arrow["f"', from=3-3, to=1-1]
+      \arrow["k", from=1-5, to=1-1]
+    \end{tikzcd}\]
+
+    Recall that in $\mb{C}^\arr$, objects are morphisms of $\C$ and morphism between $f,g \in \hom(\C)$ is $(n,k) \in \hom(\C)^2$ such that 
+    \[\begin{tikzcd}
+      { \text{dom}(f)} &&& { \text{dom}(g)} \\
+      \\
+      \\
+      { \text{cod}(f)} &&& { \text{cod}(g)}
+      \arrow["{n}"{description}, from=1-4, to=1-1]
+      \arrow["f"{description}, from=1-1, to=4-1]
+      \arrow["{k}"{description}, from=4-4, to=4-1]
+      \arrow[from=1-4, to=4-4]
+    \end{tikzcd}\]
+    commutes. Define functor $\mb{cod}: \mb{C}^\arr \arr \mb{C}$ so that $\mb{cod}(f)=\cod(f)$ and $\mb{cod}(g \warr{(n, k)} f)=\cod(g) \warr{k} \cod(f)$ where $k$ is the morphism between codomains making the last diagram commute. Define functor $\mc{G}: C/\mb{C} \arr \mb{C}^\arr$ so that $\mc{G}(g)=g$ for any $g \in \obj(C/\mb{C})$ and $\mc{G}(g \warr{g^\p} f)=g \warr{( 1_C, k)} f$. It is easy to verify all of them are functors. \\
+
+    We will now prove that $\mb{cod} \circ \mc{G}=\mc{W}$. For any $g \in C/\mb{C}$, we have $\mb{cod} \circ \mc{G}(g)=\mb{cod} ( \mc{G}(g))=\mb{cod}(g)=\cod(g)=\mc{W}(g)$ and for any $g \warr{g^\p} f$ in $C/\mb{C}$, clearly $\mb{cod} \circ \mc{G} (g \warr{g^\p} f )=\mb{cod}( \mc{G} (g \warr{g^\p} f ))=\mb{cod}(g \warr{(1_C, k)} f)=\cod(g) \warr{k} \cod(f)=\mc{W}(g \warr{g^\p} f)$.
+  \end{proof}
+
+  \begin{exercise}
+    Let $2=\{a,b\}$ be any set with exactly $2$ elements $a$ and $b$. Define a functor $F:\mb{Sets}/2 \arr \mb{Sets} \times \mb{Sets}$ with $F(f:X \arr 2)=(f^\inv (a), f^\inv(b))$. Is this an isomorphism of categories? What about the analogous situation with a one element set $1=\{a\}$ instead of $2$.
+  \end{exercise}
+  \begin{proof}
+    First we will discuss about $\mb{Sets}/2$. Here we have arrows $X \warr{f} 2$ as objects, whereas morphism $f \warr{f^\p} g$ is a morphism $\dom(f) \warr{k} \dom(g)$ making 
+    \[\begin{tikzcd}
+      \bullet &&&& \bullet \\
+      \\
+      && {2}
+      \arrow["f", from=1-1, to=3-3]
+      \arrow["k"', from=1-1, to=1-5]
+      \arrow["g"', from=1-5, to=3-3]
+    \end{tikzcd}\]
+    commute. Define $F:\mb{Sets}/2 \arr \mb{Sets} \x \mb{Sets}$ so that $F(X \warr{f} 2)=(f^\inv (a), f^\inv (b))$ and $F( f \warr{f^\p} g)=(k_{f^\inv (a)}, k_{f^\inv (b)})$ where $k_{f^\inv (a)}$ and $k_{f^\inv (b)}$ are restriction of morphism $k$ which makes the last diagram commute. The identity in $\mb{Sets}/2$ for any object $f$ is simply the identity on the domain of $f$. Therefore, we have $F(1_f)=(1_{f^\inv (a)}, 1_{f^\inv (b)})$ which is indeed identity on the object $(f^\inv (a), f^\inv (b))$. Thus, $F(1_f)=1_{(F(f))}$. Now we will prove that composition is preserved. Consider $f \warr{f^\p} g$ and $g \warr{g^\p} h$ such that 
+    \[\begin{tikzcd}
+      \bullet &&& \bullet &&& \bullet \\
+      \\
+      \\
+      &&& 2
+      \arrow["f", from=1-1, to=4-4]
+      \arrow["g"', from=1-4, to=4-4]
+      \arrow["h", from=1-7, to=4-4]
+      \arrow["k"', from=1-1, to=1-4]
+      \arrow["n"', from=1-4, to=1-7]
+      \arrow["nk"', curve={height=-30pt}, from=1-1, to=1-7]
+    \end{tikzcd}\]
+    commutes. Then we have 
+    \begin{align*}
+      F(g^\p) \circ F(f^\p) &= (n_{g^{-1}(a)}, n_{g^{-1}(b)}) \circ (k_{f^\inv (a)}, k_{f^\inv (b)}) \\
+      &=(n_{g^{-1}(a)} \circ k_{f^\inv (a)}, n_{g^{-1}(b)} \circ k_{f^\inv (b)} ) \\
+      &=((n \circ k)_{f^\inv(a)}, (n \circ k)_{f^\inv (b)}) &\text{($\ran (k_{f^\inv (a)}) \subseteq g^\inv (a)$ and $\ran (k_{f^\inv (b)}) \subseteq g^\inv(b)$) } \\
+      &=F(g^\p \circ f^\p)
+    \end{align*}
+    Functor $F: \mb{Sets}/2 \arr \mb{Sets}^2$ is not an isomorphism of category. Consider $A=\{c,d\}$ and $B=\{c,d,e\}$. There is no $f \in \obj \mb{Sets}/2$ mapping to $(A,B) \in \obj(\mb{Sets}^2)$ because if there was it would mean for any $x \in f^\inv (a)=A \subseteq B=f^\inv (b)$, we have $f(x)=a$ and $f(x)=b$ which is clearly not possible. \\
+
+    We now are going to prove that $\mb{Sets}/1 \simeq \mb{Sets}$ where $1=\{a\}$ is any singleton set. Define functor $\mc{F}: \mb{Sets}/1 \arr \mb{Sets}$ so that $\mc{F}(X \warr{f} 1)=f^\inv(a)$ for any $f \in \obj(\mb{Sets}/2)$, and $\mc{F}(f \warr{f^\p} g)= f^\inv a \warr{k} g^\inv (a)$ where $k$ is an arrow making 
+    \[\begin{tikzcd}
+      {f^{-1} (a)=\text{dom}(f)} &&&& {g^{-1} (a)=\text{dom}(g)} \\
+      \\
+      && 1
+      \arrow["f", from=1-1, to=3-3]
+      \arrow["k"', from=1-1, to=1-5]
+      \arrow["g"', from=1-5, to=3-3]
+    \end{tikzcd}\]
+    commute. Define functor $\mc{G}: \mb{Sets} \arr \mb{Sets}/1$ so that $\mc{G}(A)= A \warr{f} 1$ for any $A \in \obj(\mb{Sets})$ and $\mc{G}(A \warr{k} B)=f \warr{f^\p} g$ such that $f:A \arr 1$ and $g: B \arr 1$. It is easy to verify these are functor. Let $X \warr{f} 1 \in \obj(\mb{Sets}/1)$. Then we have $\mc{G} \circ \mc{F}(f)=\mc{G} (\mc{F}(f))=\mc{G}(f^\inv(a))=\mc{G}(X)=X \warr{f} 1$. Now consider some $f^\p: f \arr g$ for some $X \warr{f} 1$ and $Y \warr{g} 1$, it follows $\mc{G} \circ \mc{F}(f^\p)=\mc{G} (\mc{F}(f^\p))=\mc{G}(X \warr{k} Y)=f \warr{f^\p} g$. We know that $X$ gets mapped to $f$ under $\mc{G}$ necessarily because it's an unique arrow $X \arr 1$. Thus, $\mc{G} \circ \mc{F}=1_{\mb{Sets}/1}$. Simillarly, we can show $\mc{F} \circ \mc{G}=1_{\mb{Sets}}$. 
+  \end{proof}
+    \begin{remarks} In general, we have the following result. 
+      \begin{theorem} For any category $\mb{C}$ having a terminal object, A, we must have $\mb{C}/A \simeq \mb{C}$. 
+      \end{theorem}
+      \begin{proof}
+        Define functor $\mc{M}:\C/A \arr \C$ so that $\mc{M}(f)=\dom(f)$ for any $f \in \obj(\C/A)$ and $\mc{M}(f \warr{f^\p} g)=\dom(f) \warr{k} \dom(g)$ such that 
+        \[\begin{tikzcd}
+          \bullet &&&& \bullet \\
+          \\
+          && 1
+          \arrow["f", from=1-1, to=3-3]
+          \arrow["k"', from=1-1, to=1-5]
+          \arrow["g"', from=1-5, to=3-3]
+        \end{tikzcd}\]
+        commutes. Define functor $\mc{N}:\C \arr \C/A$ so that $\mc{N}(X)=X \warr{f} A$, we know such a $f$ exists because $A$ is terminal, and $\mc{N} (X \warr{k} Y)=f \warr{f^\p} g$ where $f:X \arr A$ and $g:Y \arr A$. Again, since $A$ is terminal object, we know that such $f$ and $g$ are necessarily unique. Therefore, we have $\mc{N} \circ \mc{M} (f)=\mc{N} (\mc{M}(f))=\mc{N}(\dom(f))=\dom(f) \warr{f} A=f$ and $\mc{N} (\mc{M} (f \warr{f^\p} g))=\mc{N} (\dom(f) \warr{k} \dom(g))=f \warr{f^\p} g$. Thus, $\mc{N} \circ \mc{M}=1_{\C/A}$. Simillarly, we can show $\mc{M} \circ \mc{N}=1_C$. Hence, $\mb{C}/A \simeq \mb{C}$.
+      \end{proof}
+      We now have the following result as the corollary of the theorem we just proved. 
+      \begin{Corollary}
+        For any singleton set $\{*\}$, $\mb{Sets} \simeq \mb{Sets}/\{*\}$.
+      \end{Corollary}
+    \end{remarks}
+
+  \begin{exercise}
+    Any category $\C$ determines a preorder $P(\C)$ by defining a binary relation $\leq$ on the objects by $$A \leq B \text{ if and only if there is an arrow } A \arr B$$
+    Show that $P$ determines a functor from categories to preoders. Also show that $P$ is a (one-sided) inverse to the evident inclusion functor of preorder into categories (Note that in this problem, we are working in category of small categories).
+  \end{exercise}
+  \begin{proof}
+     Define functor $P: \mb{Cats} \arr \mb{Preord}$ so that $P(\C)=(\obj(\C), \leq)$, where $A \leq B$ if and only if $\hom(A,B) \not = \emptyset$, and $P(\C \warr{\mc{F}} D)=P(\C) \warr{k} P(D)$ where $k$ is a function induced by $\mc{F}$ i.e. $k(A)=\mc{F}(A) \in \obj(D)$ for all $A \in \obj(\C)$. Notice that if $A \leq B$ then there is some $f \in \hom(A,B)$ but then it means $\mc{F}(f) \in \hom(\mc{F}(A), \mc{F}(B))$ which implies $\mc{F}(A) \leq \mc{F}(B)$. Thus, $k$ is a montone function. We now prove that $P$ is a functor. Clearly, $P(\C \warr{1} \C)=P(\C) \warr{k} P(\C)=1_{P(C)}$ because $k$ is identity on $\obj(C)$. Consider some categories $C$, $D$, and $E$ such that $C \warr{F} D \warr{G} E$. Let $P(F)=k$ and $P(G)=m$. Then we have $P(G) \circ P(F)=m \circ k=P(G \circ F)$ because $m \circ k$ is function induced by $G \circ F$. Therefore, $P$ is a functor. Since we already know that any preorder is a category, there must exists an inclusion functor, $I:  \mb{Preord} \arr \mb{cats}$, so that $I(A)=A$ and $I(f:A \arr B)=A \warr{f} B$. \\
+
+     Notice that $P \circ I(A)=P(I(A))=P(A)=(\obj(A), \leq)=A$ and $P \circ I(A \warr{f} B)=P(I(A \warr{f} B))=P(A \warr{f} B)=A \warr{f} B$. Hence, $P \circ I(A)=1_{\mb{Preord}}$. However, $P$ is not an isomorphism. To see why consider a small category $C$ defined as 
+     \[\begin{tikzcd}
+      a &&& b
+      \arrow["f", curve={height=-18pt}, from=1-1, to=1-4]
+      \arrow["g"', curve={height=18pt}, from=1-1, to=1-4]
+    \end{tikzcd}\]
+    In this case, $P(C)=(\{a,b\}, \{(a,b)\})$. Applying $I$ on it, we get the following category 
+    \[\begin{tikzcd}
+      a &&& b
+      \arrow[from=1-1, to=1-4]
+    \end{tikzcd}\]
+    Thus, $I(P(C)) \not = C$.
+  \end{proof}
+  \begin{remarks}
+    The failure of isomorphism is primarily based on the fact that $P(C)$ identifies all morphism of $\hom(A,B)$ as one morphism, for any object $A$ and $B$. Therefore, we must have the following theorem to be true. 
+    \begin{theorem}
+      Define $\mb{Cats}_1$ as the category of all categories such that $\hom(A,B)$ is at most singleton for any object $A$ and $B$. Then $\mb{Cats}_1 \simeq \mb{Posets}$.
+    \end{theorem}
+    \begin{proof}
+      Defining $P: \mb{Cats}_1 \arr \mb{Preord}$ and $I: \mb{Preord} \arr \mb{cats}$ same as the above proof, it's easy to see $P \circ I=1_{\mb{Preord}}$. Now consider $I \circ P$. Clearly, $I \circ P(C)=I(P(C))=C$. Notice that $P(C \warr{F} D)=C \warr{F} D$ because $F$ is equal to the monotone function induced on $C$ and $D$. Therefore, $I \circ P( C \warr{F} D)=I(P( C \warr{F} D) )=I(C \warr{F} D)=C \warr{F} D$. Hence, $\mb{Cats}_1 \simeq \mb{Posets}$.
+    \end{proof}
+  \end{remarks}
+
+  \begin{exercise}
+      Show that the free monoid functor $$M: \mb{Sets} \arr \mb{Mon}$$ exists, in two different ways: \\
+      (a) Assuming the particular choice $M(X)=X^*$ and define its effect $$M(f):M(A) \arr M(B)$$ on a function $f:A \arr B$ to be $$M(f)(a_1 \cdots a_k)=f(a_1)\cdots f(a_k), a_1, \cdots, a_k \in A.$$ 
+      (b) Assume only the UMP of the free monoid and use it to determine $M$ on functions, showing the result to be a functor.
+    \end{exercise}
+    \begin{proof} $ $ \\
+      (a) First we prove identity is preseved. Consider some set $A$ and let $w \in M(A)=A^*$ ie $w=a_1a_2\cdots a_k$ for $a_i \in A$. Then clearly, 
+      \begin{align*}
+        M(1_A)(w) &=1_A(a_1)\cdots 1_A(a_k) \\
+        &=a_1\cdots a_k \\
+        &=w.
+      \end{align*} Next we prove that composition is preserved. Consider $f:A \arr B$ and $g:B \arr C$. Then for any $w \in M(A)$, we have 
+      \begin{align*}
+        (M(g) \circ M(f))(w) &=M(g)(f(a_1)\cdots f(a_k)) \\
+        &=(g\circ f)(a_1) \cdots (g \circ f)(a_k) \\
+        &=M(g \circ f) (w)
+      \end{align*}
+
+      (b) Consider $f:A \arr B$ for some sets $A$ and $B$. By proposition 1.9, we know free monoids has UMP. Applying UMP on free monoid of $A$ and $B$, we see that there exists an unique monoidal homomorphism $\bar{f}:M(A) \arr M(B)$ making 
+      \[\begin{tikzcd}
+        {|M(A)|} &&&& {|M(B)|} \\
+        \\
+        && A
+        \arrow["{|\bar{f}|}", from=1-1, to=1-5]
+        \arrow["i_A", from=3-3, to=1-1]
+        \arrow["I_B \circ f"', from=3-3, to=1-5]
+      \end{tikzcd}\]
+      commute in $\mb{Sets}$, where $i_A:A \arr |M(A)|$ and $i_B:B \arr |M(B)|$ are inclusion functions. Thus, $|\bar{f}| \circ i_A=i_B \circ f$, that is to say, for all $a \in A$, $\bar{f}(a)=f(a)$ but since $\bar{f}$ is monoidal homomorphism, it would mean for any $a_1\cdots a_n \in M(A)$, we must have 
+      \begin{align*}
+        \bar{f}(a_1 \cdots a_n) &= \bar{f}(a_1)\cdots \bar{f}(a_n) \\
+        &=f(a_1)\cdots f_(a_n)
+      \end{align*}
+      Define $M(f)=\bar{f}$. Since $M:\mb{Sets} \arr \mb{Mon}$ so that $M(A)=A^*$ and $M(f)(a_1 \cdots a_n)=f(a_1)\cdots f(a_n)$, we can directly apply part (a) to see $M$ is functor.
+    \end{proof}
+
+    \begin{exercise}
+      Verify the UMP for free categories on graphs, defined as above with arrows being sequences of edges. Specficially, let $\mb{C}(G)$ be the free category on the graph $G$, so defined, and $i:G \arr U(\mb{C}(G))$ the graph homomorphism taking vertices and edges to themselves, regarded as objects and arrows in $\mb{C}(G)$. Show that for any category $\mb{D}$ and graph homomorphism $h:G \arr U(\mb{D})$, there is a unique functor $$\bar{h}: \C(G) \arr \D$$ with $$U(\bar{h}) \circ i=h$$ where $U: \mb{Cat} \arr \mb{Graph}$ is the underlying forgetful functor.
+    \end{exercise}
+    \begin{proof}
+      Define $\bar{h}:\C(G) \arr \D$ so that $\bar{h}(e_1\cdots e_n)=h(e_1) \cdots h(e_n)$ for any path $e_1\cdots e_n \in \C(G)$, $\bar{h}(1_a)=1_{h(a)}$, and $\bar{h}(a)=h(a)$ for any object $a \in \obj(\C(G))$. It is easy to see 
+      \[\begin{tikzcd}
+        {U(C(G))} &&&& {U(D)} \\
+        \\
+        && G
+        \arrow["i", from=3-3, to=1-1]
+        \arrow["h"', from=3-3, to=1-5]
+        \arrow["{U(\bar{h})}", from=1-1, to=1-5]
+      \end{tikzcd}\]
+      commutes, by the way we defined $\bar{h}$. We now prove it is unique. Consider some functor $F:\C(G) \arr D$ satisfying $U(F) \circ i=h$. Then clearly 
+      \begin{align*}
+        F(e_1\cdots e_n) &=F(e_1)\cdots F(e_n) \\
+        &=h(e_1) \cdots h(e_n) \\
+        &=\bar{h}(e_1) \cdots \bar{h}(e_n) \\
+        &=\bar{h} (e_n \cdots e_n)
+      \end{align*}
+      Thus, $F=\bar{h}$.
+    \end{proof}
+    \begin{remarks}
+      We construct functor $N: \mb{Graphs} \arr \mb{Cats}$. Consider some graphs $G$ and $H$ with $G \warr{h} H$. Applying UMP on $\C(G)$ and $\C(H)$, we see that there exists an unique functor $\bar{h}:\C(G) \arr \C(H)$ such that 
+      \[\begin{tikzcd}
+        {U(\mathbf{C}(G))} &&& {U(\mathbf{C}(H))} \\
+        \\
+        \\
+        G &&& H
+        \arrow["h", from=4-1, to=4-4]
+        \arrow["{i_H}", from=4-4, to=1-4]
+        \arrow["{i_G}"', from=4-1, to=1-1]
+        \arrow["{U(\bar{h})}"', from=1-1, to=1-4]
+      \end{tikzcd}\]
+      commutes in $\mb{Graphs}$. But that means for any edge $e$ and vertex $v$ in $G$, we must have $\bar{h}(v)=h(v)$ and $\bar{h}(e)=h(e)$. However, since $\bar{h}$ is a functor, we have 
+      \begin{align*}
+        \bar{h}(e_1 \cdots e_n) &= \bar{h}(e_1)\cdots \bar{h}(e_n) \\
+        &= h(e_1) \cdots h(e_n)
+      \end{align*}
+      Now define functor $N:\mb{Graphs} \arr \mb{Cats}$ so that $N(G)=\C(G)$ and $N(G \warr{h} H)=\C(G) \warr{\bar{h}} \C(H)$. First we prove identity is preserved. Consider some $e_1 \cdots e_n \in \C(G)$, then we have 
+      \begin{align*}
+        N(1_{G})(e_1 \cdots e_n) &= 1_G(e_1) \cdots 1_G(e_n) \\
+        e_1 \cdots e_n.
+      \end{align*}
+      where $e_i \in G$ is an edge. Next we prove composition is preserved. Consider the graph homomorphism $h:G \arr H$ and $k:H \arr K$. Then 
+      \begin{align*}
+        (N(k) \circ N(h)) (e_1 \cdots e_n) &=   N(k) (N(h)(e_1) \cdots N(h)(e_n)) \\
+        &=N(k)(N(h) (e_1)) \cdots N(k)  (N(h) (e_n)) \\
+        &=(N(k) \circ N(h))(e_1) \cdots (N(k) \circ N(h))(e_n) \\
+        &=N(k \circ h)(e_1 \cdots e_n).
+      \end{align*}
+    \end{remarks}
+
+    \begin{exercise}
+      Use the cayley representation to show that every small category is isomorphic to a "concrete" one, that is, one in which objects are sets and the arrows are functions between them.
+    \end{exercise}
+    \begin{proof}
+      Recall that cayley representation, $\bar{\C}$ of $\C$ is a category with collection of objects as $\{\C/C: C \in \obj(C)\}$ and and arrows $\bar{g}: \C/C \arr \C/D$, for some $g: C \arr D$ in $\C$ and any $f:X \arr C$ in $\bar{C}$ as $g \circ f$ making 
+      \[\begin{tikzcd}
+        X \\
+        \\
+        C && D
+        \arrow["{g \circ f}", from=1-1, to=3-3]
+        \arrow["g"', from=3-1, to=3-3]
+        \arrow["f"', from=1-1, to=3-1]
+      \end{tikzcd}\]
+      commute in $\C$. It is easy to see that all objects are are sets and arrows are thus set functions. We now prove $\bar{\C}$ is isomorphic to $\C$. Define functor $\mc{F}:\C \arr \bar{\C}$ so that $F(C)=\C/C$ and $F(C \warr{f} D)=\C/C \warr{\bar{f}} \C/D$. It is easy to see that $\mc{F}$ is bijective on objects and arrows.
+    \end{proof}
+  
+  \chapter{Abstract Structures}
+    \begin{exercise}
+      Show that a function between sets is an epimorphism if and only if it is surjective. Conclude that the isos in $\mb{Sets}$ are exactly epi-monos.
+    \end{exercise}
+    \begin{proof}
+      The converse implication is trivial, so we only prove the forward direction. Let $f:A \tarr B$. Suppose $f$ is not surjective. Then there is some $b \in B$ which is not a f-image. Define $i,j:B \arr \{x,y\}$ such that $i(c)=x$ for all $c \in B$ and $j(c)=
+      \begin{cases}
+        x \quad &\text{if} \, c \in f(A) \\
+        y \quad &\text{if} \, c \notin f(A) \\
+   \end{cases}.$
+   This contradicts that $f$ was epic.
+  \end{proof}
+
+  \begin{exercise}
+    Show that in a poset category, all arrows are epi-monos.
+  \end{exercise}
+  \begin{proof}
+    Trivial.
+  \end{proof}
+
+  \begin{exercise}
+    (Inverses are unique) If an arrow $f: A \arr B$ has inverses $g, g^\p: B \arr A$ (i.e., $g \circ f=1_A$ and $f \circ g = 1_B$ and similarly for $g^\p$ ), then $g=g^\p$.
+  \end{exercise}
+  \begin{proof}
+    Consider the following commutative diagram. 
+    \[\begin{tikzcd}
+      B &&& A \\
+      \\
+      \\
+      A &&& B
+      \arrow["g"{description}, from=1-1, to=4-1]
+      \arrow["f"{description}, from=4-1, to=4-4]
+      \arrow["f"{description}, from=1-4, to=4-4]
+      \arrow["{g^\prime}"{description}, from=1-1, to=1-4]
+      \arrow["{1_B}"{description}, from=1-1, to=4-4]
+    \end{tikzcd}\]
+    But then since $f$ is mono, $g=g^\p$.
+  \end{proof}
+
+  \begin{exercise}
+    With regard to a commutative triangle, 
+    \[\begin{tikzcd}
+      A && B \\
+      \\
+      && C
+      \arrow["f", from=1-1, to=1-3]
+      \arrow["g", from=1-3, to=3-3]
+      \arrow["h"', from=1-1, to=3-3]
+    \end{tikzcd}\]
+    (a) if $f$ and $g$ are isos (resp. monos, resp. epis), so is $h$. \\
+    (b) if $h$ is monic then so is $f$. \\
+    (c) iif $h$ is epic, so is $g$.
+  \end{exercise}
+  \begin{proof} $ $ \\
+    (a) If $f$ and $g$ are isos, then clearly $h^{-1}=f^\inv \circ g^\inv$. If $f$ and $g$ are both monos and $h \circ m = h \circ n$ then we have $g \circ (f \circ m)=g \circ (f \circ n)$ implies $f \circ m = f \circ n$ which in turns implies $m=n$ since $f$ and $g$ are monos. Simillarly, if $f$ and $g$ are both epis then so is $h$. \\
+
+    (b) Consider the following commutative diagram. 
+    Consider the following commutative diagram. 
+    \[\begin{tikzcd}
+      \bullet &&&& A &&&& B \\
+      \\
+      \\
+      \\
+      &&&&&&&& C
+      \arrow["f", from=1-5, to=1-9]
+      \arrow["g", from=1-9, to=5-9]
+      \arrow["h"', from=1-5, to=5-9]
+      \arrow["m", shift left=1, from=1-1, to=1-5]
+      \arrow["n"', shift right=1, from=1-1, to=1-5]
+    \end{tikzcd}\]
+      Suppose $fm=fn$. Taking $g$ both side, we see $hm=gfm=gfn=hn$, however, since $h$ is mono, we have $m=n$. \\
+      
+    (c) Consider the following commutative diagram.
+    \[\begin{tikzcd}
+      A &&&& B \\
+      \\
+      \\
+      \\
+      &&&& C &&&& \bullet
+      \arrow["f", from=1-1, to=1-5]
+      \arrow["g", from=1-5, to=5-5]
+      \arrow["h"', from=1-1, to=5-5]
+      \arrow["m", shift left=1, from=5-5, to=5-9]
+      \arrow["n"', shift right=1, from=5-5, to=5-9]
+    \end{tikzcd}\]
+    Suppose $mg=ng$. That implies $mh=(mg)f=(ng)f=nh$ but since $h$ is epic, we have $m=n$. \\
+    
+    (d) Consider $f: \{1,2\} \arr \{3,4,5\}$ defined as $f=\{(1,3), (2,4)\}$ and $g: \{3,4,5\} \arr \{6,7\}$ as $g=\{(3,6), (4,7), (5,7)\}$. Clearly, $g \circ f$ is injective while $g$ is not. However, since in $\mb{Sets}$ mono is equivalent to injectivity, we are done.
+  \end{proof}
+
+\end{document}
+
