@@ -646,5 +646,31 @@
     (d) Clearly since split mono implies mono, by applying part (b), we have $f$ to be iso.
   \end{proof}
 
+  \begin{exercise}
+    Show that a homomorphism $h: G \arr H$ of graph is monic just if it is injective on both edges and vertices.
+  \end{exercise}
+  \begin{proof}
+    Recall that a directed graph is a structure $G=(G_0, G_1, s,t)$ where $G_1$ (edges) and $G_0$ (vertices) are sets, and $s:E \arr V$ (source) and $t: E \arr V$ (target) are set theoretic functions. Furthermore, graph homomorphism $h: G \arr H$ is the ordered pair $(h_0, h_1)$ making 
+    \[\begin{tikzcd}
+      {G_1} &&&&& {G_0} \\
+      \\
+      \\
+      \\
+      \\
+      {H_1} &&&&& {H_0}
+      \arrow["s", shift left=1, from=1-1, to=1-6]
+      \arrow["{h_1}", from=1-1, to=6-1]
+      \arrow["{h_0}"', from=1-6, to=6-6]
+      \arrow["s", shift left=1, from=6-1, to=6-6]
+      \arrow["t"', shift right=1, from=1-1, to=1-6]
+      \arrow["t"', shift right=1, from=6-1, to=6-6]
+    \end{tikzcd}\]
+    commute. \\
+    Suppose $h_1$ and $h_0$ are injective and consider morphisms $g, k: K \arr G$ such that $hg=hk$. It means that $(h_1g_1, h_0g_0)=(h_1k_1, h_1k_0)$ which implies $h_1g_1=h_1k_1$. However, since $h_1$ is mono (injective), we have $g_1=k_1$. Similarly, $g_0=k_0$. Hence, $(g_1, g_0)=(k_1,k_0)$. \\
+    Conversely, suppose $h:G \arr H$ is monic. Consider the graph $K=(\{x\}, \{\})$. Define $g,k:K \arr G$ so that $g_0(x) \not = k_0 (x)$. Thus, $g=(g_0, g_1) \not = (k_0, k_1)=k$. Since $h$ is monic, it follows $(h_0 g_0, h_1 g_1)=hg \not = hk=(h_0k_0, h_1 k_1)$, however because $g_1=k_1$ vacously, we must have $h_0 g_0 \not = h_0 k_0$. This proves that $h_0$ is monic and hence injective. For proving $h_1$ is injective, consider the following cases; \\
+    \tb{Case-1.} There is no pair of vertices, in $G$, having more than one edge between them. In this case, clearly injectivity of $h_0$ implies injectivity of $h_1$. \\
+    \tb{Case-2.} There is atleast one pair of vertices, in $G$, with more than one edge between them. Let $e_2,e_3:c \arr d$ be such edges in $G$. Consider the graph $M=(\{x,y\},\{e\})$. Define $g,h:M \arr G$ so that $g_0(x)=c=k_0(x)$ and $g_0(y)=d=k_0(y)$, and $g_1(e)=e_2$ and $k_1(e)=e_3$. Clearly, $g \not = k$. Since $h$ is monic we have $(h_0 g_0, h_1 g_1)=hg \not = hk=(h_0k_0, h_1 k_1)$, however because $g_0=k_0$, it follows $h_1 g_1 \not = h_1 k_1$. This proves $h_1$ is monic and so injective.
+  \end{proof}
+
 \end{document}
 
