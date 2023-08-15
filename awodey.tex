@@ -47,7 +47,7 @@
 \usepackage{float}
 \usepackage{tabu}
 \usepackage{longtable}
-
+\usepackage{hyperref}
 
 \theoremstyle{plain}
 \newtheorem{exercise}{Exercise}[chapter]
@@ -99,7 +99,7 @@
 \newcommand{\op}{\text{op}}
 \newcommand{\inv}{{-1}}
 \newcommand{\Z}{\mathbb{Z}}
-\newcommand{\U}{\mathbb{U}}
+\newcommand{\U}{\mathcal{U}}
 \newcommand{\dom}{\text{dom}}
 \newcommand{\p}{\prime}
 \newcommand{\obj}{\text{obj}}
@@ -117,6 +117,15 @@
 \newcommand{\G}{\mc{G}}
 \newcommand{\iso}{\cong}
 \newcommand{\tarr}{\twoheadrightarrow}
+\newcommand{\ovl}{\overline}
+\newcommand{\mon}{\rightarrowtail}
+\newcommand{\la}{\langle} 
+\newcommand{\ra}{\rangle}
+\newcommand{\Hom}{\text{Hom}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\fst}{\text{fst}} 
+\newcommand{\snd}{\text{snd}}
+\newcommand{\Arr}{\text{Arr}}
   \setlength{\parindent}{0pt}
  
  
@@ -160,7 +169,7 @@
 \endgroup
 
 \chapter{Categories}
-
+  \label{sec:ex1ch1}
   \begin{exercise}
     The object of $\mb{Rel}$ are sets, and an arrow $A \arr B$ is a relation from $A$ to $B$, that is, a subset $R \subseteq A \times B$. The equality relation $\{ \langle a, a \rangle \in A \times A: a \in A \}$ is the identity arrow on a set $A$. Composition in $\mb{Rel}$ is to be given by $$ S \circ R=\{ \langle a , c \rangle \in A \times C: \exists b (\langle a,b \rangle \in R \text{ and } \langle b,c \rangle \in S)\}$$ for $R \subseteq A \times B$ and $S \subseteq B \times C$. \\
     (a) Show that $\mb{Rel}$ is a category. \\
@@ -622,7 +631,6 @@
     (d) $f$ is both a split mono and a split epi.
   \end{exercise}
 
-\newpage
   \begin{proof} We are going to prove (b), (c), (d) are equivalent to (a). The forward implication for all of them is trivial, so we only prove the converse. \\
 
     (b) Let $f_R$ be the right inverse of $f$. Consider 
@@ -672,5 +680,310 @@
     \tb{Case-2.} There is atleast one pair of vertices, in $G$, with more than one edge between them. Let $e_2,e_3:c \arr d$ be such edges in $G$. Consider the graph $M=(\{x,y\},\{e\})$. Define $g,h:M \arr G$ so that $g_0(x)=c=k_0(x)$ and $g_0(y)=d=k_0(y)$, and $g_1(e)=e_2$ and $k_1(e)=e_3$. Clearly, $g \not = k$. Since $h$ is monic we have $(h_0 g_0, h_1 g_1)=hg \not = hk=(h_0k_0, h_1 k_1)$, however because $g_0=k_0$, it follows $h_1 g_1 \not = h_1 k_1$. This proves $h_1$ is monic and so injective.
   \end{proof}
 
+  \begin{exercise}
+    Show that in any category, any retract of a projective object is also projective.
+  \end{exercise}
+  \begin{proof}
+    Let $P$ be a projective object and $A$ be a retract of $P$. That is to say, there are maps $e:P \arr A$ and $s:A \arr P$ with the property $es=1_A$. Consider object $E$ and $X$ such that there are maps $g:A \arr X$ and an epi $e_2:E \arr X$. Our goal is to define a map $\bar{g}:A \arr E$ so that $e_2 ~ \bar{g}=g$. Rewriting $g$ as $g=g(es)=(ge)s$, we see that $ge$ is a map $P \arr X$. Therefore, there exists arrow $\bar{f}$ making 
+    \[\begin{tikzcd}
+      &&&&&& E \\
+      &&&&&& {} \\
+      \\
+      A &&& P &&& X
+      \arrow["{\bar{f}}", dashed, from=4-4, to=1-7]
+      \arrow["{e_2}", from=1-7, to=4-7]
+      \arrow["s", shift left, from=4-1, to=4-4]
+      \arrow["e", shift left, from=4-4, to=4-1]
+      \arrow["g", curve={height=30pt}, from=4-1, to=4-7]
+    \end{tikzcd}\]
+    commute. Defining $\bar{g}$ as $\bar{g}=\bar{f} s$, we have the desired result. 
+  \end{proof}
+  \begin{exercise}
+    Show that all sets are projective.
+  \end{exercise}
+  \begin{proof}
+    Consider arbitrary sets $P$, $X$, and $E$ such that there is map $f:P \arr X$ and epi $e: E \arr X$. Our goal is to define a map $\bar{f}: P \arr E$ such that 
+    \[\begin{tikzcd}
+	  &&& E \\
+	  \\
+	  \\
+	  P &&& X
+	  \arrow["{\bar{f}}", dashed, from=4-1, to=1-4]
+	  \arrow["e", two heads, from=1-4, to=4-4]
+	  \arrow["f"', from=4-1, to=4-4]
+    \end{tikzcd}\]
+    commutes. Consider some element $x \in P$, we have $e^{-1}(f(x)) \in E$. Since $e$ is epi, we have $e^{-1}(f(x))$ to be non empty for all $x \in X$. Clearly, there exists a function $z:\{e^{-1} (f(x)): x \in X\} \arr \bigcup \{e^{-1} (f(x)): x \in X\}$ such that $z(e^{-1} (f(x))) \in e^{-1} (f(x))$. Define $\bar{f}:X \arr E$ to be $x \mapsto z(e^{-1} (f(x)))$.
+  \end{proof}
+
+  \begin{exercise}
+    Show that the epis among posets are the surjections (on elements), and that the one element poset $\mb{1}$ is projective.
+  \end{exercise}
+  \begin{proof}
+    Trivial.
+  \end{proof}
+
+  \begin{exercise}
+    Show that sets, regarded as discrete posets, are projective in the category of posets. Give an example of a poset that is not projective. Show that every projective poset is discrete, that is, a set. Conclude that $\mb{Sets}$ is (isomorphic to) the full subcategory of projectives in $\mb{Pos}$, consisting of all projective posets and all monotone maps between them.
+  \end{exercise}
+  \begin{proof}
+    It is hard not to see that sets, regarded as discrete posets, are easily projective in the category of posets. Consider some non-discrete poset $P$ and $X$, and a discrete poset $E$ such that there is montone function $f:P \arr X$ and an epi $e:E \arr X$. Clearly, we can never define $\bar{f}$ which would make 
+    \[\begin{tikzcd}
+      &&& E \\
+      &&& {} \\
+      \\
+      P &&& X
+      \arrow["{\bar{f}}", dashed, from=4-1, to=1-4]
+      \arrow["e", from=1-4, to=4-4]
+      \arrow["f"', from=4-1, to=4-4]
+    \end{tikzcd}\]
+    commute. Consequently, all projective objects in $\mb{Posets}$ must be discrete. Thus, we trivially have the isomorphism from $\mb{Sets}$ to projective objects in $\mb{Posets}$.
+  \end{proof}
+
+  \begin{exercise}
+    Let $A$ be a set. Define an $A-$monoid to be a monoid $M$ equipped with a function $m:A \arr \U(M)$ (to the underlying set of $M$). A morphism $h:(M,m) \arr (N, n)$ of $A-$monoids is to be a monoid homomorphism $h: M \arr N$ such that $\U(h) \circ m=n$ (a commutative triangle). Together with the evident identities and composites, this defines a category $\tb{A-Mon}$ of $A$-monoids. \\
+    Show that an initial object in $tb{A-Mon}$ is the same thing as a free monoid $M(A)$ on $A$.
+  \end{exercise}
+  \begin{proof}
+    Recall that UMP of the free monoid of $A$ asserts that given any monoid $N$ and any function $A \warr{f} |N|$, there is an unique monoid homomorphism $M(A) \warr{\ovl{f}} N$ such that $|\ovl{f}| \circ i=f$, that is to say, the following diagram commutes 
+    \[\begin{tikzcd}
+      {|M(A)|} &&&& {|N|} \\
+      \\
+      \\
+      \\
+      A
+      \arrow["i", from=5-1, to=1-1]
+      \arrow["f"', from=5-1, to=1-5]
+      \arrow["{|\overline{f}|}", from=1-1, to=1-5]
+    \end{tikzcd}\]
+    in $\mb{Sets}$. We are now ready to justify why the free monoid $M(A)$ is intial object of $A-$mon. To attain this goal, we need to show that for any $(N,n) \in \obj(\tb{A-Mon})$, there is unique morphism $(M(A), i) \arr (N,n)$. Trivially, enacting UMP of free monoid get us that.
+  \end{proof}
+
+  \begin{exercise}
+    Show that for any Boolean algebra $B$, Boolean homomorphism $h:B \arr \mb{2}$ corresponds exactly to ultrafilters in $B$.
+  \end{exercise}
+  \begin{proof}
+    First we prove the forward implication. Suppose $B$ is a boolean algebra and consider boolean homomorphism $h:B \arr \mb{2}$. We hope to prove that $h^{-1}(1)$ and $h^{-1}(0)$ are both ultrafilters. Clearly $h^{-1}$ and $h^{-1}(0)$ are filters since otherwise it would contradict $h$ being a homomorphism. Furthermore because $h:B \arr \mb{2}$, for all $x \in B$, either $x \in h^{-1}(1)$ or $x \in h^{-1}$ which shows they are indeed ultrafilters. Conversely, suppose $U$ is some ultrafilter on $B$. Define $g:B \arr \mb{2}$ as $$g(x)= \begin{cases}
+      0, & \text{ if $x \notin U$} \\
+      1, & \text{if $x \in U$}
+    \end{cases}$$
+    Clearly $g(0)$ must be $0$ because $0 \in U$ would mean that $U$ is not maximal filter. Similarly $U$ being a filter assure us that $1 \in U$ and so $g(1)=1$. It is easy to see $g(a \land b)=g(a) \land g(b)$ and $g(a \lor b)=g(a) \lor g(b)$ considering the properties of $\mb{2}$.
+  \end{proof}
+
+  \begin{exercise}
+    In any category with binary products, show directly that $$A \times (B \times C) \simeq (A \times B) \times C$$
+  \end{exercise}
+  \begin{proof}
+    First we define UMP of trenary product. In any category $\mb{C}$, define trenary product of the objects $A$, $B$, and $C$ to be an object $P$ (commonly written as $A \times B \times C$) such that $P$ has the form 
+    \[\begin{tikzcd}
+      && P \\
+      \\
+      A && B && C
+      \arrow["{\pi_a}"{description}, from=1-3, to=3-1]
+      \arrow["{\pi_c}"{description}, from=1-3, to=3-5]
+      \arrow["{\pi_b }"{description}, from=1-3, to=3-3]
+    \end{tikzcd}\]
+     and for any other object $X$ of the form 
+     \[\begin{tikzcd}
+      && X \\
+      \\
+      A && B && C
+      \arrow["{x_a}"{description}, from=1-3, to=3-1]
+      \arrow["{x_c}"{description}, from=1-3, to=3-5]
+      \arrow["{x_b }"{description}, from=1-3, to=3-3]
+    \end{tikzcd}\]
+    there exists a unique $f:X \arr P$ making the diagram 
+    \[\begin{tikzcd}
+      && X \\
+      \\
+      && P \\
+      \\
+      A && B & {} & C
+      \arrow["{\exists! f}"{description}, dashed, from=1-3, to=3-3]
+      \arrow["{\pi_1}"{description}, from=3-3, to=5-1]
+      \arrow["{\pi_2}"{description}, from=3-3, to=5-3]
+      \arrow["{\pi_3}"{description}, from=3-3, to=5-5]
+      \arrow["{x_a}"{description}, from=1-3, to=5-1]
+      \arrow["{x_c}"{description}, from=1-3, to=5-5]
+      \arrow["{x_b}"{description, pos=0.4}, curve={height=-12pt}, from=1-3, to=5-3]
+    \end{tikzcd}\]
+    commute, that is, such that $x_i=\pi_i f$. It is easy to see trenary product are unique upto isomorphism. The idea we are employing is to show both $A \times (B \times C)$ and $(A \times B) \times C$ satisfy UMP of trenary product. This would imply they are isomorphic. For what follow we are assuming that it is valid to take ternary and binary product of any objects in the category. Consider some object $X$ such that there are arrows $x_a:X \arr A$, $x_b:X \arr B$, and $x_c:X \arr C$. Taking binary product of $A$ and $B$ first, we see there must be unique arrow $f_1: X \arr A \times B$ making 
+    \[\begin{tikzcd}
+      && X \\
+      \\
+      && {A \times B} \\
+      \\
+      A &&&& B
+      \arrow["{\exists !f_1}"{description}, dashed, from=1-3, to=3-3]
+      \arrow["{\pi_1}"{description}, from=3-3, to=5-1]
+      \arrow["{\pi_2}"{description}, from=3-3, to=5-5]
+      \arrow["{x_a}"{description}, from=1-3, to=5-1]
+      \arrow["{x_b}"{description}, from=1-3, to=5-5]
+    \end{tikzcd}\]
+    commute. Subsequently, taking binary product of $A \times B$ and $C$, we see that there must exists unique morphism $f_2:X \arr (A \times B) \times C$ making 
+
+    \[\begin{tikzcd}
+      && X \\
+      && {} \\
+      && {(A \times B) \times C} \\
+      \\
+      {A \times B} &&&& C
+      \arrow["{f_1}"{description}, from=1-3, to=5-1]
+      \arrow["{\exists !f_2}"{description}, dashed, from=1-3, to=3-3]
+      \arrow["{x_c}"{description}, from=1-3, to=5-5]
+      \arrow["{\pi_3}"{description}, from=3-3, to=5-5]
+      \arrow["{\pi_4}"{description}, from=3-3, to=5-1]
+    \end{tikzcd}\]
+    commute, where $\pi_4$ is the projection $\pi_4:(A \times B) \times C \arr A \times B$. Summarizing it, we have the following commutative diagram
+    \[\begin{tikzcd}
+      &&& X \\
+      \\
+      \\
+      &&& {(A \times B) \times C} \\
+      \\
+      \\
+      A &&& B &&& C
+      \arrow["{\exists !f_2}"{description}, dashed, from=1-4, to=4-4]
+      \arrow["{\pi_3}"{description}, from=4-4, to=7-7]
+      \arrow["{x_c}"{description}, from=1-4, to=7-7]
+      \arrow["{x_a}"{description}, from=1-4, to=7-1]
+      \arrow["{\pi_2 \pi_4}"{description, pos=0.3}, from=4-4, to=7-4]
+      \arrow["{\pi_1\pi_4}"{description}, from=4-4, to=7-1]
+      \arrow["{x_b}"{description, pos=0.3}, curve={height=-18pt}, from=1-4, to=7-4]
+    \end{tikzcd}\]
+     Therefore, $(A \times B) \times C$ satisfy the UMP of trenary product of $A$, $B$ and $C$. By a similar construction, taking binary product of $B$ and $C$ first and then the resultant with $A$, we would see $A \times (B \times C)$ satisfy UMP of trenary product. Hence, $(A \times B) \times C \simeq A \times (B \times C)$.
+  \end{proof}
+
+  \begin{exercise} $ $ \\
+    (a) For any index set $I$, define the product $\pi_{i \in I} X_i$ of an $I$-indexed family of objects $(X_i)_{i \in I}$ in a category, by giving a UMP generalizing that for binary products. \\
+    (b) Show that in $\mb{Sets}$, for any set $X$ the set $X^I$ of all functions $f:I \arr X$ has this UMP, with respect to the constant family where $X_i=X$ for all $i \in I$, and thus $$X^I \simeq \prod_{i \in I} X.$$
+  \end{exercise}
+  \begin{proof} $ $ \\
+    (a) The object $\prod_{i \in I} X_i$ is said to be product of indexed family $(X_i)_{i \in I}$ if there exists morphism $\pi_i:\prod_{i \in I} X_i \arr X_i$ for each $i \in I$ and for any object $A$ such that there are morphism $x_i: A \arr X_i$ for each $i$, there exists unique arrow $f:A \arr \prod_{i \in I} X_i$ with the property that $x_i=\pi_i f$ for any $i \in I$. In other, the diagram 
+    \[\begin{tikzcd}
+      && A \\
+      \\
+      && {\prod_{i \in I} X_i} \\
+      \\
+      {X_j} &&&& {X_k}
+      \arrow["{\exists !f}"{description}, dashed, from=1-3, to=3-3]
+      \arrow["{\pi_j}"{description}, from=3-3, to=5-1]
+      \arrow["{\pi_k}"{description}, from=3-3, to=5-5]
+      \arrow["{x_j}"'{description}, from=1-3, to=5-1]
+      \arrow["{x_k}"'{description}, from=1-3, to=5-5]
+    \end{tikzcd}\]
+    must commute for all $j,k \in I$.  \\
+
+    (b) For every $i \in I$, we have projection morphism $\pi_i:X^I \arr X$ which sends $f \mapsto f(i)$. Consider some object $A$ with morphisms $g_i:A \arr X$ for every $i \in I$. Define $f:A \arr X^I$ such that $a \mapsto (I \warr{g} X)$ where $g$ maps $i \mapsto g_i(a)$. Thus, for any $a \in A$ and $i \in I$, we have $\pi_i \circ f (a)=\pi_i(f(a))=\pi_i (g)=g_i(a)$. Hence, $f$ makes 
+    \[\begin{tikzcd}
+      &&& A \\
+      \\
+      \\
+      &&& {X^I} \\
+      \\
+      \\
+      X &&&&&& X
+      \arrow["{\exists ! f}"', dashed, from=1-4, to=4-4]
+      \arrow["{g_i}", from=1-4, to=7-1]
+      \arrow["{g_j}", from=1-4, to=7-7]
+      \arrow["{\pi_i}"', from=4-4, to=7-1]
+      \arrow["{\pi_j}"', from=4-4, to=7-7]
+    \end{tikzcd}\]
+    commute for all $i,j \in I$. For uniqueness, assume there is $h:A \arr X^I$ making the last diagram commute. Consider some $a \in A$. For simplicity, Let $h(a)=I \warr{h_1} X$ and $f(a)=I \warr{h_2} X$. Clearly, we must have $\pi_i \circ h(a) = g_i(a)=\pi_i \circ f(a)$, that is to say, $h_1(i)=h_2(i)$ for all $i \in I$. Hence, $h_1=h_2$ and consequently $f=h$. Therefore, $X^I$ satisfy UMP of indexed product, and so $X^I \iso \Pi_{i \in I} X$.
+  \end{proof}
+
+  \begin{exercise}
+    Given a category $\mb{C}$ with objects $A$ and $B$, define the category $\mb{C}_{A,B}$ to have objects $(X, x_1,x_2)$ where $x_1:X \arr A$ and $x_2:X \arr B$, and with arrows $f:(X,x_1,x_2) \arr (Y, y_1, y_2)$ being arrows $f:X \arr Y$ with $y_1 \circ f=x_1$ and $y_2 \circ f=x_2$. Show that $\mb{C}_{A,B}$ has a terminal object just in case $A$ and $B$ have product in $\mb{C}$.
+  \end{exercise}
+  \begin{proof}
+    In general, we have the following result. 
+    \begin{theorem}
+      Let $I$ be an index set. Define category $C_{(A_i)_{i \in I}}$ to have objects $(X, (x_i)_{i \in I})$, where $x_i:X \arr A_i$, and with arrows $f:(X, (x_i)_{i \in I}) \arr (Y, (y_i)_{i \in I})$ being arrow $f:X \arr Y$ with $y_i \circ f = x_i$ for all $i \in I$. Then $C_{(A_i)_{i \in I}}$ has a terminal object just in case the product $\prod_{i \in I} A_i$ exists.
+    \end{theorem}
+    Clearly, $(\prod_{i \in I} A_i, (\pi_i)_{i \in I})$ is an object of $\mb{C}_{(A_i)_{i \in I}}$ and because of UMP of indexed product, we know for any object $(X, (x_i)_{i \in I})$ of $\mb{C}_{(A_i)_{i \in I}}$, there is unique morphism $f:(X, (x_i)_{i \in I}) \arr (\prod_{i \in I} A_i, (\pi_i)_{i \in I})$ in $\mb{C}_{(A_i)_{i \in I}}$. Thus, $\prod_{i \in I} A_i$ is an terminal object of the category. Therefore, we have the desired result as corollary of our theorem.
+  \end{proof}
+  \begin{remarks}
+    It is easy to construct isomorphism $\mc{F}:\mb{C} \arr \mb{C}_{\emptyset}$ and as a consequent of it, we must have $\prod_{i \in \emptyset} A_i$ to be isomorphic to terminal object of $\mb{C}$. This means that empty product acts as a terminal object in any category.
+  \end{remarks}
+
+  \begin{exercise}
+    In the category of types $\C(\lambda)$ of the $\lambda$-calculus, determine the product functor $A,B \mapsto A \times B$ explicitly. Also, show that for any fixed type $A$, there is a functor $A \arr (-): \C(\lambda) \arr \C(\lambda)$, taking any type $X$ to $ A \arr X$.
+  \end{exercise}
+  \begin{proof}
+    Define functor $\F:\C(\lambda) \times \C(\lambda) \arr \C(\lambda)$ so that $F(A,B)=A \times B$, for any types $A$ and $B$, and $F(f,g)=\lambda x^{A \times B}. (f \pi_1 ~ x, g \pi_2 ~ x)$ for any $A \warr{f} C$ and $B \warr{g} D$. We now prove $\F$ is a functor. For any $(1_A, 1_B) \in \Arr (\C(\lambda))$, we have 
+    \begin{align*}
+      \F(1_A,1_B) x &= \lambda x^{A \times B}. (1_A \pi_1 ~ x, 1_B \pi_2 ~ x) \\
+      &= \lambda x^{A \times B}. (1_A (\pi_1 x), 1_B(\pi_2 x)) \\
+      &= \lambda x^{A \times B}. (1_A ((\lambda y. \fst(y))x), 1_B((\lambda y. \snd(y))x)) \\
+      &= \lambda x^{A \times B}. (1_A ~ \fst(x), 1_B ~ \snd (x)) \\
+      &= \lambda x^{A \times B}. (\fst(x), \snd(x)) \\
+      &= \lambda x^{A \times B}. x \\
+      &= 1_{A \times B} \\
+      &= 1_{\F(A,B)}.
+    \end{align*}
+    Thus, $\F$ preserves identity. Next we prove that it preserves composition. In what follows, for the sake of simplicity, we would defer from specifiying the type of binding variable. Consider some $(f,g), (h,j) \in \Arr(\C(\lambda))$. Then 
+    \begin{align*}
+      \F(f,g) \circ \F(h,j) &= \lambda x. F(f,g) \left( \F(h,j) ~ x \right) \\
+      &= \lambda x. \F(f,g) \left( (\lambda y. (h \pi_1 ~ y, j \pi_2 ~ y)) x\right) \\
+      &=\lambda x. \F(f,g) (h \pi_1 ~ x, j \pi_2 ~ x) \\
+      &= \lambda x. \F(f,g) ( h (\lambda z. \fst (z) ~ x), j (\lambda z.\snd(z) ~ x)) \\
+      &= \lambda x. \F(f,g) (h ~ \fst (x), j ~ \snd(x)) \\
+      &=\lambda x. (\lambda y. (f \pi_1 ~ y, g \pi_2 ~ y))(h ~ \fst(x), j ~ \snd(x)) \\
+      &= \lambda x. (\lambda y. (f \fst(y), g ~ \snd y)) (h ~ \fst (x), j ~ \snd(x)) \\
+      &=\lambda x. (f(\fst( (h ~ \fst (x), j ~ \snd(x)))), g(\snd((h ~ \fst (x), j ~ \snd(x))))) \\
+      &= \lambda x. (f (h ~ \fst (x)), g(j ~ \snd (x))) \\
+      &= \lambda x. ( (f \circ h) \fst(x), (g \circ j) \snd x) \\
+      &= \lambda x. ( (f \circ h) \pi_1 ~ x, (g \circ j) \pi_2 ~ x) \\
+      &=\F((f \circ h, g \circ j)) \\
+      &= \F ((f,g) \circ (h,j)).
+    \end{align*} 
+    Hence, $\F: \C(\lambda) \times \C(\lambda) \arr \C(\lambda)$ is a functor. Next we define functor $(A \arr (-)): \C(\lambda) \arr \C(\lambda)$. Define $\G:\C(\lambda) \arr \C(\lambda)$ so that $G(X)=A \arr X$ and $G(X \warr{f} Y) = \lambda g^{A \arr X}. f \circ g$. Clearly, $\G(1_X)=\lambda g^{A \arr X}. 1_X \circ g=\lambda g^{A \arr X}.g=1_{g^{A \arr X}}=1_{\G(X)}$. For proving composition is preserved, let $f:X \arr Y$ and $g:Y \arr Z$. Then clearly, 
+    \begin{align*}
+      \G(g) \circ \G(f) &= \lambda h. \G(g) (\G(f) h) \\
+      &= \lambda h. \G(g) ( (\lambda h^{A \arr X}. f \circ h) h) \\
+      &= \lambda h. \G(g) (f \circ h) \\
+      &= \lambda h. (\lambda h^{A \arr Y}. g \circ h ) (f \circ h) \\
+      &= \lambda h. g \circ (f \circ h) \\
+      &=\lambda h. (g \circ f) \circ h \\
+      &=\G(g \circ f).
+    \end{align*}
+    Therefore, $\G=A \arr (-)$ is a functor.
+
+  \end{proof}
+  \begin{exercise}
+    In any category $\mb{C}$ with products, define the graph of an arrow to be the monomorphism $$\Gamma(f)=\la 1_A, f \ra : A \mon A \times B.$$ Show that for $\mb{C}=\mb{Sets}$ this determines a functor $\Gamma: \mb{Sets} \arr \mb{Rel}$ to the category $\mb{Rel}$ of relations. 
+  \end{exercise}
+  \begin{proof}
+    Define functor $\Gamma:\mb{C} \arr \mb{Sets}$ so that $\Gamma(A)=A$ for any $A \in \obj(\C)$ and $\Gamma(f)=\la 1_A, f \ra$ for any $f:A \arr B$. This is the same functor we defined in \hyperref[sec:ex1ch1] {exercise 1.1}.
+  \end{proof}
+
+  \begin{exercise}
+    Show that the forgetful functor $U:\mb{Mon} \arr \mb{Sets}$ from monoids to sets is representable. Infer that $U$ preserves all (small) products.
+  \end{exercise}
+  \begin{proof}
+    The idea we are going to employ is to construct a natural isomorphism between functors $\Hom(\N, -): \mb{Mon} \arr \mb{Sets}$ and $U: \mb{Mon} \arr \mb{Sets}$ which would clealy lead to the desired result. Define natural transformation $\eta: \Hom(\N, -) \arr U$ as $\eta_A:\Hom(\N, A) \arr U(A)$ which maps $f \mapsto f(1)$ for any monoid $A$. First we show $\eta_A$ is isomorphism. By easy induction, we have $\eta_A$ to be injective. For surjection, for any $a \in A$, consider the map $f:\N \arr A$ such that $n \mapsto a^n$. We proceed to show $\eta$ preserves the morphisms. Let $A$ and $B$ be monoids, and consider monoidal homomorphism $k:A \arr B$. Clearly
+    \begin{align*}
+      (U(k) \circ \eta_A) f &= U(k) (\eta_A (f)) \\
+      &=U(k) (f(1)) \\
+      &=k(f(1)) \\
+      &=(k \circ f) (1) \\
+      &=\eta_B(k \circ f) \\
+      &=\eta_B(\hom(\N, K) (f)) \\
+      &=(\eta_B \circ \hom(\N,k)) f.
+    \end{align*}
+    Thus, $\eta$ makes 
+    \[\begin{tikzcd}
+      {\text{Hom}(\mathbb{N},A)} &&&&& {\text{Hom}(\mathbb{N},B)} \\
+      \\
+      \\
+      \\
+      \\
+      {U(A)} &&&&& {U(B)}
+      \arrow["{\text{Hom}(\mathbb{N}, k)}"{description}, from=1-1, to=1-6]
+      \arrow["{\eta_B}"', from=1-6, to=6-6]
+      \arrow["{\eta_A}", from=1-1, to=6-1]
+      \arrow["{U(k)}", from=6-1, to=6-6]
+    \end{tikzcd}\]
+    commute. Consequently, $\eta$ is a natural isomorphism. Therefore, by corollary 2.22, forgetful functor $U$ preserves the products.
+  \end{proof}
 \end{document}
 
